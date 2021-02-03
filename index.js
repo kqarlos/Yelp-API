@@ -1,6 +1,7 @@
 const inputEl = document.getElementById("input");
 const searchEl = document.getElementById("search");
 
+// Autocomplete disable
 function getAutoComplete(keyword) {
     if (keyword.length < 5) {
         return false;
@@ -18,6 +19,7 @@ function getAutoComplete(keyword) {
 
 }
 
+// Calls yelp's api to get a list of restaurants based on our keyword search
 function getBusinesses(keyword) {
     let key = "rMy1RF6fsAcJ66aNUB7kpfTNQIGb1-gAzujZ8NcCmfmWoj6hjQfbB4Q8CfDEzfZLhUCqQLfAvPOnecKX9FKaDdQBSL33mhu0SZ6j7__472iB89ZAqG9Ku_G0y0YaYHYx";
     $.ajax({
@@ -32,6 +34,7 @@ function getBusinesses(keyword) {
     })
 }
 
+// Given a list of businesses render them in a list
 function renderResults(businesses) {
     businesses.forEach(element => {
         let button = $("<button>");
@@ -43,6 +46,7 @@ function renderResults(businesses) {
     });
 }
 
+// Given a business render the business information dynamically
 function renderInfo(business) {
     $("#info").empty();
     let card = $("<div>").addClass("card my-3");
@@ -60,24 +64,27 @@ function renderInfo(business) {
     $("#info").append(card);
 }
 
-
+// Autocomplete disable
 inputEl.addEventListener("keypress", (e) => {
     // getAutoComplete(e.target.value);
 });
 
+//Triggered when search button is clicked
 searchEl.addEventListener("click", (e) => {
     e.preventDefault();
     getBusinesses(inputEl.value);
 })
 
+//Triggered when a search result button is clicked
+$(document).on("click", ".result-button", (e) => {
+    renderInfo(JSON.parse(e.target.getAttribute("data-info")));
+})
+
+//Set up the remote server
 $(() => {
     jQuery.ajaxPrefilter(function (options) {
         if (options.crossDomain && jQuery.support.cors) {
             options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
         }
     });
-})
-
-$(document).on("click", ".result-button", (e) => {
-    renderInfo(JSON.parse(e.target.getAttribute("data-info")));
 })
