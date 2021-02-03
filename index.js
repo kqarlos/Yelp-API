@@ -19,7 +19,6 @@ function getAutoComplete(keyword) {
 }
 
 function getBusinesses(keyword) {
-    console.log(keyword);
     let key = "rMy1RF6fsAcJ66aNUB7kpfTNQIGb1-gAzujZ8NcCmfmWoj6hjQfbB4Q8CfDEzfZLhUCqQLfAvPOnecKX9FKaDdQBSL33mhu0SZ6j7__472iB89ZAqG9Ku_G0y0YaYHYx";
     $.ajax({
         url: `https://api.yelp.com/v3/businesses/search?term=${keyword}&latitude=37.786882&longitude=-122.399972&radius=10000&limit=15`,
@@ -38,9 +37,27 @@ function renderResults(businesses) {
         let button = $("<button>");
         button.addClass("list-group-item list-group-item-action result-button");
         button.attr("type", "button");
+        button.attr("data-info", JSON.stringify(element));
         button.text(element.name)
         $("#results").append(button);
     });
+}
+
+function renderInfo(business) {
+    $("#info").empty();
+    let card = $("<div>").addClass("card my-3");
+    let cardBody = $("<div>").addClass("card-body");
+    let name = $("<div>").addClass("card-title py-1").text(`Name: ${business.name}`);
+    let phone = $("<div>").addClass("card-subtitle py-1").text(`Phone Number: ${business.phone}`);
+    let location = $("<div>").addClass("card-subtitle py-1").text(`${business.location.address1} ${business.location.city}`);
+    let rating = $("<div>").addClass("card-subtitle py-1").text(`Rating: ${business.rating}`);
+    let url = $("<div>").addClass("card-subtitle py-1").text(`URL: ${business.url}`);
+    let img = $("<img>").addClass("img py-1").attr("src", business.image_url);
+
+    cardBody.append(name, phone, location, rating, url, img);
+    card.append(cardBody);
+
+    $("#info").append(card);
 }
 
 
@@ -57,7 +74,10 @@ $(() => {
     jQuery.ajaxPrefilter(function (options) {
         if (options.crossDomain && jQuery.support.cors) {
             options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-            console.log('done');
         }
     });
+})
+
+$(document).on("click", ".result-button", (e) => {
+    renderInfo(JSON.parse(e.target.getAttribute("data-info")));
 })
