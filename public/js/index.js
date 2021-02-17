@@ -19,9 +19,9 @@ function getAutoComplete(keyword) {
 
 }
 
-// Calls yelp's api to get a list of restaurants based on our keyword search
+// User server to call Yelp's API
 function getBusinesses(keyword) {
-    console.log("GET BUSSINESSES KEYWORD", keyword)
+    // console.log("GET BUSSINESSES KEYWORD", keyword)
     fetch("/api/restaurants/" + keyword, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
