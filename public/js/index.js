@@ -21,27 +21,23 @@ function getAutoComplete(keyword) {
 
 // Calls yelp's api to get a list of restaurants based on our keyword search
 function getBusinesses(keyword) {
-    fetch("/restaurants", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(keyword)
-    }).then(response => response.json()).then(data => console.log("DATA", data));
+    console.log("GET BUSSINESSES KEYWORD", keyword)
+    fetch("/api/restaurants/" + keyword, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    }).then(response => {
+        console.log("FE RESPONSE", response)
+        return response.json();
+    }).then(data => {
+        console.log("DATA", data);
+        renderResults(data.businesses);
 
-    // let key = "rMy1RF6fsAcJ66aNUB7kpfTNQIGb1-gAzujZ8NcCmfmWoj6hjQfbB4Q8CfDEzfZLhUCqQLfAvPOnecKX9FKaDdQBSL33mhu0SZ6j7__472iB89ZAqG9Ku_G0y0YaYHYx";
-    // $.ajax({
-    //     url: `https://api.yelp.com/v3/businesses/search?term=${keyword}&latitude=37.786882&longitude=-122.399972&radius=10000&limit=15`,
-    //     method: "GET",
-    //     headers: {
-    //         authorization: `Bearer ${key}`
-    //     }
-    // }).then(function (result) {
-    //     console.log("search", result.businesses)
-    //     renderResults(result.businesses);
-    // })
+    });
 }
 
 // Given a list of businesses render them in a list
 function renderResults(businesses) {
+    $("#results").empty();
     businesses.forEach(element => {
         let button = $("<button>");
         button.addClass("list-group-item list-group-item-action result-button");
