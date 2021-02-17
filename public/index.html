@@ -8,16 +8,18 @@
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
 
-
+    <link href="./css/style.css" rel="stylesheet" />
     <title>Yelp's API</title>
 </head>
 
 <body>
 
     <div class="container p-5 mt-3">
-        <form class="text-center">
+        <form autocomplete="off" class="text-center">
             <label class="h1">Search Yelp's API</label>
-            <input class="form-control my-4" id="input" placeholder="Peruvian Food" />
+            <div class="autocomplete">
+                <input class="form-control my-4" id="input" type="text" placeholder="Peruvian Food" />
+            </div>
             <button class="btn btn-primary fa fa-search" id="search"> Search</button>
         </form>
     </div>
