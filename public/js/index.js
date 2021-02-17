@@ -26,12 +26,10 @@ function getBusinesses(keyword) {
         method: "GET",
         headers: { "Content-Type": "application/json" }
     }).then(response => {
-        console.log("FE RESPONSE", response)
         return response.json();
     }).then(data => {
-        console.log("DATA", data);
+        // console.log("DATA", data);
         renderResults(data.businesses);
-
     });
 }
 

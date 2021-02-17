@@ -21,9 +21,10 @@ app.get("/", (req, res) => {
 });
 
 app.get('/api/restaurants/:keyword', (req, res) => {
-    let keyword = req.body;
+    let keyword = req.params.keyword;
+    // console.log("Keyword", req.params.keyword);
     let key = "rMy1RF6fsAcJ66aNUB7kpfTNQIGb1-gAzujZ8NcCmfmWoj6hjQfbB4Q8CfDEzfZLhUCqQLfAvPOnecKX9FKaDdQBSL33mhu0SZ6j7__472iB89ZAqG9Ku_G0y0YaYHYx";
-    let url = `https://api.yelp.com/v3/businesses/search?term=${keyword}&latitude=37.786882&longitude=-122.399972&radius=10000&limit=15`;
+    let url = `https://api.yelp.com/v3/businesses/search?term=${keyword}&latitude=37.786882&longitude=-122.399972&limit=15`;
 
     fetch(url, {
         method: "GET",
@@ -33,7 +34,6 @@ app.get('/api/restaurants/:keyword', (req, res) => {
     }).then((response) => {
         return response.json();
     }).then((data) => {
-        // console.log("YELP DATA", data);
         res.json(data);
     }).catch((err) => {
         console.log(err);
