@@ -1,5 +1,7 @@
 const express = require("express");
 const fetch = require("node-fetch");
+const path = require("path");
+
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -9,7 +11,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/restaurants', (req, res) => {
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "./index.html"));
+});
+
+app.put('/restaurants', (req, res) => {
     // request(
     //     { url: 'https://joke-api-strict-cors.appspot.com/jokes/random' },
     //     (error, response, body) => {
