@@ -21,17 +21,23 @@ function getAutoComplete(keyword) {
 
 // Calls yelp's api to get a list of restaurants based on our keyword search
 function getBusinesses(keyword) {
-    let key = "rMy1RF6fsAcJ66aNUB7kpfTNQIGb1-gAzujZ8NcCmfmWoj6hjQfbB4Q8CfDEzfZLhUCqQLfAvPOnecKX9FKaDdQBSL33mhu0SZ6j7__472iB89ZAqG9Ku_G0y0YaYHYx";
-    $.ajax({
-        url: `https://api.yelp.com/v3/businesses/search?term=${keyword}&latitude=37.786882&longitude=-122.399972&radius=10000&limit=15`,
+    fetch("/restaurants", {
         method: "GET",
-        headers: {
-            authorization: `Bearer ${key}`
-        }
-    }).then(function (result) {
-        console.log("search", result.businesses)
-        renderResults(result.businesses);
-    })
+        headers: { "Content-Type": "application/json" },
+        body: keyword
+    }).then(response => response.json()).then(data => console.log("DATA", data));
+
+    // let key = "rMy1RF6fsAcJ66aNUB7kpfTNQIGb1-gAzujZ8NcCmfmWoj6hjQfbB4Q8CfDEzfZLhUCqQLfAvPOnecKX9FKaDdQBSL33mhu0SZ6j7__472iB89ZAqG9Ku_G0y0YaYHYx";
+    // $.ajax({
+    //     url: `https://api.yelp.com/v3/businesses/search?term=${keyword}&latitude=37.786882&longitude=-122.399972&radius=10000&limit=15`,
+    //     method: "GET",
+    //     headers: {
+    //         authorization: `Bearer ${key}`
+    //     }
+    // }).then(function (result) {
+    //     console.log("search", result.businesses)
+    //     renderResults(result.businesses);
+    // })
 }
 
 // Given a list of businesses render them in a list
@@ -82,9 +88,5 @@ $(document).on("click", ".result-button", (e) => {
 
 //Set up the remote server
 $(() => {
-    jQuery.ajaxPrefilter(function (options) {
-        if (options.crossDomain && jQuery.support.cors) {
-            options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-        }
-    });
+
 })
