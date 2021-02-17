@@ -15,7 +15,7 @@
 
 ## Description
 
-Testing Yelp's API with
+Testing Yelp's API with a node/express proxy server
 
 ## Table of Contents
 
@@ -40,7 +40,7 @@ node server.js
 ```
 
 <p align="center">
-    <a href=""><img src="https://img.shields.io/badge/-👉 See Live Site-success?style=for-the-badge"  alt="Live Site" /></a>
+    <a href="https://yelp-api-proxyserver.herokuapp.com/"><img src="https://img.shields.io/badge/-👉 See Live Site-success?style=for-the-badge"  alt="Live Site" /></a>
 </p>
 
 
