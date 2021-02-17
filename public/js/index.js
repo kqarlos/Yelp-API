@@ -3,20 +3,21 @@ const searchEl = document.getElementById("search");
 
 // Autocomplete disable
 function getAutoComplete(keyword) {
-    if (keyword.length < 5) {
+    if (keyword.length < 3) {
         return false;
     }
-    let key = "rMy1RF6fsAcJ66aNUB7kpfTNQIGb1-gAzujZ8NcCmfmWoj6hjQfbB4Q8CfDEzfZLhUCqQLfAvPOnecKX9FKaDdQBSL33mhu0SZ6j7__472iB89ZAqG9Ku_G0y0YaYHYx";
-    $.ajax({
-        url: `https://api.yelp.com/v3/autocomplete?text=${keyword}&latitude=37.786882&longitude=-122.399972`,
-        method: "GET",
-        headers: {
-            authorization: `Bearer ${key}`
-        }
-    }).then(function (result) {
-        console.log("auto", result)
-    })
 
+    fetch("/api/autocomplete/" + keyword, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    }).then(response => {
+        return response.json();
+    }).then(data => {
+        console.log("AUTO DATA", data.terms);
+        // renderResults(data.businesses);
+    });
+
+    
 }
 
 // User server to call Yelp's API
@@ -66,7 +67,7 @@ function renderInfo(business) {
 
 // Autocomplete disable
 inputEl.addEventListener("keypress", (e) => {
-    // getAutoComplete(e.target.value);
+    getAutoComplete(e.target.value);
 });
 
 //Triggered when search button is clicked
